@@ -52,11 +52,13 @@ var autocolorPlugin = {
     }
 
     const gen = colorGen(repeat);
+    const datagen = colorGen(repeat);
 
     if (options.offset) {
       // offset the color generation by n colors
       for (let i = 0; i < options.offset; i++) {
         gen.next();
+        datagen.next();
       }
     }
 
@@ -76,7 +78,7 @@ var autocolorPlugin = {
         const background = [];
         const border = [];
         for (let i = 0; i < dataset.data.length; i++) {
-          const cdata = getNext(gen, customize, {chart, datasetIndex: index, dataIndex: i});
+          const cdata = getNext(datagen, customize, {chart, datasetIndex: index, dataIndex: i});
           background.push(cdata.background);
           border.push(cdata.border);
         }
