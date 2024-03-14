@@ -67,18 +67,18 @@ var autocolorPlugin = {
     const datasetMode = mode === 'dataset';
 
     let c = getNext(gen, customize, {chart, datasetIndex: 0, dataIndex: datasetMode ? undefined : 0});
-    for (const dataset of chart.data.datasets) {
+    for (const [index, dataset] of chart.data.datasets.entries()) {
       if (datasetMode) {
         if (setColors(dataset, c.background, c.border)) {
-          c = getNext(gen, customize, {chart, datasetIndex: dataset.index});
+          c = getNext(gen, customize, {chart, datasetIndex: index});
         }
       } else {
         const background = [];
         const border = [];
         for (let i = 0; i < dataset.data.length; i++) {
-          background.push(c.background);
-          border.push(c.border);
-          c = getNext(gen, customize, {chart, datasetIndex: dataset.index, dataIndex: i});
+          const cdata = getNext(gen, customize, {chart, datasetIndex: index, dataIndex: i});
+          background.push(cdata.background);
+          border.push(cdata.border);
         }
         setColors(dataset, background, border);
       }
